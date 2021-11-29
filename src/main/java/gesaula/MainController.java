@@ -1,5 +1,6 @@
 package gesaula;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -58,9 +59,9 @@ public class MainController implements Initializable {
 	private ObjectProperty<Alumno> seleccionado = new SimpleObjectProperty<>();
 
 	private ObjectProperty<Grupo> grupo = new SimpleObjectProperty<Grupo>();
-	
-	//modelo ficheros
-	
+
+	// modelo ficheros
+
 	private StringProperty fichero = new SimpleStringProperty();
 
 	// vistas
@@ -179,13 +180,12 @@ public class MainController implements Initializable {
 		seleccionado.addListener(this::onSeleccionadoChanged);
 
 		// ---------------------------
-		
-		//BINDING FICHERO
-		
+
+		// BINDING FICHERO
+
 		fichero.bind(ficheroText.textProperty());
-		
-		
-		//----------------------------
+
+		// ----------------------------
 
 		grupo.set(new Grupo());
 
@@ -196,21 +196,20 @@ public class MainController implements Initializable {
 		if (ov != null) {
 
 			listaAlumnos.unbind();
-			
+
 			denominacion.unbindBidirectional(ov.denominacionProperty());
 			fechaInicio.unbindBidirectional(ov.iniCursoProperty());
 			fechaFin.unbindBidirectional(ov.finCursoProperty());
 			examenes.unbindBidirectional(ov.getPesos().examenesProperty());
 			practicas.unbindBidirectional(ov.getPesos().practicasProperty());
 			actitud.unbindBidirectional(ov.getPesos().actitudProperty());
-			
 
 		}
 
 		if (nv != null) {
 
 			listaAlumnos.bind(nv.alumnosProperty());
-			
+
 			denominacion.bindBidirectional(nv.denominacionProperty());
 			fechaInicio.bindBidirectional(nv.iniCursoProperty());
 			fechaFin.bindBidirectional(nv.finCursoProperty());
@@ -268,8 +267,43 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onGuardarFicheroButton(ActionEvent event) {
+
+		String ruta = fichero.get();
+		File file = new File(ruta);
 		
-		
+		if (ruta != null) {
+			
+		try {
+			
+			grupo.get().save(file);
+			
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.initOwner(App.primaryStage);
+			alert.setTitle("Guardar grupo");
+			alert.setHeaderText("Se ha guardado el grupo correctamente.");
+			alert.setContentText("El grupo " + grupo.get().getDenominacion() + " se ha guardado en el fichero '" + ruta + "'.");
+			alert.showAndWait();
+			
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(App.primaryStage);
+			alert.setTitle("Guardar grupo");
+			alert.setHeaderText("Error al guardar el grupo.");
+			alert.setContentText(e.getMessage());
+			alert.showAndWait();
+			e.printStackTrace();
+
+		}
+		}
+		else {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(App.primaryStage);
+			alert.setTitle("Guardar grupo");
+			alert.setHeaderText("Error al guardar el grupo.");
+			alert.setContentText("Debe especificar la ruta del fichero donde se guardar� el grupo.");
+			alert.showAndWait();
+		}
 
 	}
 
@@ -286,7 +320,18 @@ public class MainController implements Initializable {
 
 	@FXML
 	void onNuevoFicheroButton(ActionEvent event) {
-		
+
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.initOwner(App.primaryStage);
+		alert.setTitle("Nuevo grupo");
+		alert.setHeaderText("Va a crear un grupo nuevo.");
+		alert.setContentText("¿Está seguro?");
+		Optional<ButtonType> opcion = alert.showAndWait();
+		if (opcion.get().equals(ButtonType.OK)) {
+
+			grupo.set(new Grupo());
+
+		}
 
 	}
 }

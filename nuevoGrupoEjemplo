@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<grupo denominacion="2º DAM B">
+    <alumnos>
+        <apellidos>Cabrera</apellidos>
+        <fechaNacimiento>2021-11-08</fechaNacimiento>
+        <nombre>Daniel </nombre>
+        <repite>false</repite>
+        <sexo>HOMBRE</sexo>
+    </alumnos>
+    <alumnos>
+        <apellidos>Pablo </apellidos>
+        <fechaNacimiento>2021-11-10</fechaNacimiento>
+        <nombre>Ruben</nombre>
+        <repite>true</repite>
+        <sexo>MUJER</sexo>
+    </alumnos>
+    <alumnos>
+        <apellidos>Terminator</apellidos>
+        <fechaNacimiento>2021-11-20</fechaNacimiento>
+        <nombre>Saray</nombre>
+        <repite>false</repite>
+        <sexo>MUJER</sexo>
+    </alumnos>
+    <finCurso>2021-11-19</finCurso>
+    <iniCurso>2021-11-04</iniCurso>
+    <pesos actitud="69.0" examenes="50.0" practicas="22.0"/>
+</grupo>
